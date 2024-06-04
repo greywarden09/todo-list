@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
 import './App.css';
+import DrawerMenu, {drawerWidth} from './components/drawer/DrawerMenu';
+import {AppBar, Box, CssBaseline, Toolbar, Typography} from "@mui/material";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    useEffect(() => {
+        document.title = "To-Do list"
+    }, []);
+
+    return (
+        <Box sx={{display: 'flex'}}>
+            <CssBaseline/>
+            <AppBar
+                position='fixed'
+                sx={{width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`}}>
+                <Toolbar>
+                    <Typography variant='h6' noWrap component='div'>
+                        To-Do List
+                    </Typography>
+                </Toolbar>
+                <DrawerMenu/>
+            </AppBar>
+        </Box>
+    );
 }
 
 export default App;

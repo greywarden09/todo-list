@@ -1,0 +1,14 @@
+.navigation-divider {
+    color: #777;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-bottom: 5pt;
+}
+
+.MuiChip-clickable {
+    margin: 2.5pt 0 2.5pt 0;
+}
+
+.space {
+    width: 100%;
+}
