@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import './App.css';
 import DrawerMenu, {drawerWidth} from './components/drawer/DrawerMenu';
 import {AppBar, Box, CssBaseline, Toolbar, Typography} from "@mui/material";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import TodoListCalendar from "./pages/TodoListCalendar";
 
 function App() {
     useEffect(() => {
@@ -19,8 +21,16 @@ function App() {
                         To-Do List
                     </Typography>
                 </Toolbar>
-                <DrawerMenu/>
             </AppBar>
+            <DrawerMenu/>
+            <Box
+                component='main'
+                sx={{flexGrow: 1, bgcolor: 'background.default', p: 3}}>
+                <Toolbar/>
+                <Routes>
+                    <Route path='/calendar' element={<TodoListCalendar/>}/>
+                </Routes>
+            </Box>
         </Box>
     );
 }

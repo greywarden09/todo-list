@@ -1,16 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Divider} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import api from "../../http";
 
-const Lists = () => (
-    <>
-        <Divider textAlign='left' className='navigation-divider'>Lists</Divider>
-        <Button style={{justifyContent: 'flex-start'}}
-                variant='text'
-                startIcon={<AddIcon/>}>
-            Add new list
-        </Button>
-    </>
-);
+const Lists = () => {
+    const [lists, setLists] = useState([]);
+
+    useEffect(() => {
+        api.get("/tasks/lists")
+            .then(response => {
+                setLists(response.data.sort());
+            })
+    }, []);
+
+    const renderLists = () => {
+        return lists.map(list => {
+            return <Button variant='text' style={{justifyContent: 'flex-start'}}>{list}</Button>
+        })
+    }
+
+    return (
+        <>
+            <Divider textAlign='left' className='navigation-divider'>Lists</Divider>
+            {renderLists()}
+        </>
+    );
+};
 
 export default Lists;

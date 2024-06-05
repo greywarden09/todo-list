@@ -1,14 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Chip, Divider} from "@mui/material";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PushPinIcon from "@mui/icons-material/PushPin";
+import api from "../../http";
+import {Link} from "react-router-dom";
 
 
 const Tasks = () => {
-    const [tasksCount, setTasksCount] = useState(100);
-    const [todayTasksCount, setTodayTasksCount] = useState(100);
+    const [tasksCount, setTasksCount] = useState(0);
+    const [todayTasksCount, setTodayTasksCount] = useState(0);
+
+    useEffect(() => {
+        api.get("/tasks/today")
+            .then(response => {
+                setTodayTasksCount(response.data.length);
+            })
+        api.get("/tasks")
+            .then(response => {
+                setTasksCount(response.data.length);
+            })
+    }, []);
 
     return (
         <>
@@ -29,7 +42,8 @@ const Tasks = () => {
             </Button>
             <Button style={{justifyContent: 'flex-start'}}
                     variant='text'
-                    startIcon={<CalendarMonthIcon/>}>
+                    startIcon={<CalendarMonthIcon/>}
+                    component={Link} to='/calendar'>
                 Calendar
             </Button>
             <Button style={{justifyContent: 'flex-start'}}
