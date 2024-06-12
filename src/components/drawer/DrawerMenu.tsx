@@ -24,7 +24,6 @@ const DrawerMenu = () => (
     >
         <Toolbar/>
         <Tasks/>
-        <Lists/>
         <Tags/>
 
     </Drawer>

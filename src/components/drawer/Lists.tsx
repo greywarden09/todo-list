@@ -6,7 +6,7 @@ const Lists = () => {
     const [lists, setLists] = useState([]);
 
     useEffect(() => {
-        api.get("/tasks/lists")
+        api.get("/lists")
             .then(response => {
                 setLists(response.data.sort());
             })

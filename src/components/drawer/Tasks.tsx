@@ -17,7 +17,7 @@ const Tasks = () => {
             .then(response => {
                 setTodayTasksCount(response.data.length);
             })
-        api.get("/tasks")
+        api.get("/tasks/upcoming")
             .then(response => {
                 setTasksCount(response.data.length);
             })
@@ -28,14 +28,16 @@ const Tasks = () => {
             <Divider textAlign='left' className='navigation-divider'>Tasks</Divider>
             <Button style={{justifyContent: 'flex-start'}}
                     variant='text'
-                    startIcon={<KeyboardDoubleArrowRightIcon/>}>
+                    startIcon={<KeyboardDoubleArrowRightIcon/>}
+                    component={Link} to='/upcoming'>
                 Upcoming
                 <span className='space'></span>
                 <Chip label={tasksCount}/>
             </Button>
             <Button style={{justifyContent: 'flex-start'}}
                     variant='text'
-                    startIcon={<ChecklistIcon/>}>
+                    startIcon={<ChecklistIcon/>}
+                    component={Link} to='/today'>
                 Today
                 <span className='space'></span>
                 <Chip label={todayTasksCount}/>

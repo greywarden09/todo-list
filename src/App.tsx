@@ -2,8 +2,9 @@ import React, {useEffect} from 'react';
 import './App.css';
 import DrawerMenu, {drawerWidth} from './components/drawer/DrawerMenu';
 import {AppBar, Box, CssBaseline, Toolbar, Typography} from "@mui/material";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import TodoListCalendar from "./pages/TodoListCalendar";
+import TasksView, {ViewType} from "./pages/TasksView";
 
 function App() {
     useEffect(() => {
@@ -29,6 +30,8 @@ function App() {
                 <Toolbar/>
                 <Routes>
                     <Route path='/calendar' element={<TodoListCalendar/>}/>
+                    <Route path='/today' element={<TasksView viewType={ViewType.TODAY}/>}/>
+                    <Route path='/upcoming' element={<TasksView viewType={ViewType.UPCOMING}/>}/>
                 </Routes>
             </Box>
         </Box>

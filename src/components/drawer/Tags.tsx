@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {Chip, Divider, Stack} from "@mui/material";
 import api from "../../http";
+import {AxiosResponse} from "axios";
+import TagModel from "../../model/TagModel";
 
 const Tags = () => {
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState([] as TagModel[]);
 
     useEffect(() => {
-        api.get('/tasks/tags')
-            .then(response => {
+        api.get('/tags')
+            .then((response: AxiosResponse<TagModel[]>) => {
                 setTags(response.data.sort());
             })
     }, []);
 
     const renderTags = () => {
         return tags.map(tag => {
-            return <Chip label={tag}/>
+            return <Chip label={tag.name} style={{backgroundColor: `${tag.color}`}}/>
         });
     }
 
