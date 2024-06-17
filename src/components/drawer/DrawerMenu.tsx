@@ -1,9 +1,9 @@
 import React from 'react';
 import {Drawer, Toolbar} from "@mui/material";
 import './DrawerMenu.css';
-import Tasks from "./Tasks";
-import Lists from "./Lists";
-import Tags from "./Tags";
+import Tasks from "../tasks/Tasks";
+import Lists from "../lists/Lists";
+import Tags from "../tags/Tags";
 
 export const drawerWidth: number = 360;
 

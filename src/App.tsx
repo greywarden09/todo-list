@@ -5,8 +5,26 @@ import {AppBar, Box, CssBaseline, Toolbar, Typography} from "@mui/material";
 import {Route, Routes} from "react-router-dom";
 import TodoListCalendar from "./pages/TodoListCalendar";
 import TasksView, {ViewType} from "./pages/TasksView";
+import {Provider, useDispatch} from "react-redux";
+import {AppDispatch, store} from "./store";
+import {fetchTodayTasks, fetchUpcomingTasks} from "./data/tasksSlice";
+
+const AppWrapper = () => {
+    return (
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    );
+}
 
 function App() {
+    const dispatch: AppDispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchTodayTasks());
+        dispatch(fetchUpcomingTasks());
+    }, [dispatch]);
+
     useEffect(() => {
         document.title = "To-Do list"
     }, []);
@@ -38,4 +56,4 @@ function App() {
     );
 }
 
-export default App;
+export default AppWrapper;

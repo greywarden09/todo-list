@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import {Card, CardContent} from "@mui/material";
 
 const TodoListCalendar = () => {
-    return (
-        <Card>
-            <CardContent>
-                <Calendar/>
-            </CardContent>
-        </Card>
+    const [date, setDate] = useState(new Date());
 
+    return (
+        <>
+            <Card>
+                <CardContent>
+                    <Calendar onChange={(event: any) => setDate(event)}/>
+                </CardContent>
+            </Card>
+        </>
     );
 }
 

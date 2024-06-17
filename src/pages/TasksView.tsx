@@ -1,9 +1,26 @@
-import React, {useEffect, useState} from "react";
-import {Card, Checkbox, Fab, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import React, {useState} from "react";
+import {
+    Card,
+    CardContent,
+    Checkbox,
+    Fab,
+    Grid,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Modal,
+    TextField,
+    Typography
+} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import TaskModel from "../model/TaskModel";
-import api from "../http";
-import {AxiosResponse} from "axios";
+import {useSelector} from "react-redux";
+import {RootState} from "../store";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import CreateTaskDialog from "../components/tasks/CreateTaskDialog";
 
 export enum ViewType {
     TODAY,
@@ -20,26 +37,36 @@ const fabStyle = {
     right: 16
 }
 
-const TasksView = (props: TasksViewProps) => {
-    const [tasks, setTasks] = useState([] as TaskModel[]);
+const modalStyle = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
-    useEffect(() => {
-        api.get(props.viewType === ViewType.TODAY ? "/tasks/today" : "/tasks/upcoming")
-            .then((response: AxiosResponse<TaskModel[]>) => {
-                setTasks(response.data);
-            })
-    }, [props.viewType]);
+const TasksView = (props: TasksViewProps) => {
+    const [open, setOpen] = useState(false);
+
+    const {todayTasks, upcomingTasks} = useSelector((state: RootState) => state.tasks);
+
+    const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
 
     return (
         <>
             <Card>
                 <List>
-                    {tasks.map((task) => {
+                    {(props.viewType === ViewType.TODAY ? todayTasks : upcomingTasks).map((task: TaskModel) => {
                         return (
                             <ListItem
                                 key={task.id}
                                 disablePadding>
-                                <ListItemButton role={undefined} dense>
+                                <ListItemButton role={undefined} dense key={task.id}>
                                     <ListItemIcon>
                                         <Checkbox
                                             edge="start"
@@ -54,9 +81,10 @@ const TasksView = (props: TasksViewProps) => {
                     })}
                 </List>
             </Card>
-            <Fab color="primary" sx={fabStyle}>
+            <Fab color="primary" sx={fabStyle} onClick={handleOpen}>
                 <AddIcon/>
             </Fab>
+            <CreateTaskDialog open={open} handleClose={handleClose}/>
         </>
     );
 }
